@@ -14,3 +14,4 @@ C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontr
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\PLDcontrol\obj\Release\PLDcontrol.csproj.GenerateResource.Cache
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\PLDcontrol\obj\Release\PLDcontrol.exe
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\PLDcontrol\obj\Release\PLDcontrol.pdb
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\PLDcontrol\obj\Release\PLDcontrol.csprojResolveAssemblyReference.cache

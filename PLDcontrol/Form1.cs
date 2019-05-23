@@ -112,12 +112,15 @@ namespace PLDcontrol
                 }
                 try
                 {
-                    //try to select COM4 for arduino and COM1 for Laser
+                    //try to select COM4 for arduino
                     toolStripComboBox1.SelectedIndex = toolStripComboBox1.FindStringExact("COM4");
                 }
                 catch(System.IO.IOException ex)
                 {
                     toolStripComboBox1.SelectedIndex = 0;
+                    writeLogFile("COM4 port empty");
+                    MessageBox.Show("No device in COM4 port", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
                 }
 
                 currentPort = (string)toolStripComboBox1.SelectedItem;
@@ -229,7 +232,7 @@ namespace PLDcontrol
             }
             catch (System.IO.FileNotFoundException)
             {
-                //
+                //No file to clear
             }
         }
 
