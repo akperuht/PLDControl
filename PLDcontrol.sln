@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLDcontrol", "PLDcontrol\PL
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0D37F811-8684-4ACD-8C42-0E49CD7014E0}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PLDControl setup", "PLDControl setup\PLDControl setup.vdproj", "{67F418B2-6E8B-4E94-9262-29B66A14A1D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,8 @@ Global
 		{FE1DDD90-01E2-46C6-AC9F-AAF61EEA1E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE1DDD90-01E2-46C6-AC9F-AAF61EEA1E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE1DDD90-01E2-46C6-AC9F-AAF61EEA1E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67F418B2-6E8B-4E94-9262-29B66A14A1D2}.Debug|Any CPU.ActiveCfg = Debug
+		{67F418B2-6E8B-4E94-9262-29B66A14A1D2}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

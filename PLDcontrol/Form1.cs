@@ -221,9 +221,16 @@ namespace PLDcontrol
         /// </summary>
         private void ClearLogFile()
         {
-            FileStream fileStream = File.Open(filename, FileMode.Open);
-            fileStream.SetLength(0);
-            fileStream.Close(); // This flushes the content, too.
+            try
+            {
+                FileStream fileStream = File.Open(filename, FileMode.Open);
+                fileStream.SetLength(0);
+                fileStream.Close(); // This flushes the content, too.
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                //
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
