@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
       <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
@@ -118,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="laser_warning.jpg" />
+    <Content Include="logo.ico" />
     <Content Include="Resources\logo1.png" />
     <None Include="Resources\schem10.png" />
     <None Include="Resources\schem10_on.png" />

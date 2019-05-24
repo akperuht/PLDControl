@@ -32,3 +32,20 @@ C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software-github c
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software-github copy\PLDcontrol\obj\Release\PLDcontrol.Info.resources
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software-github copy\PLDcontrol\obj\Release\PLDcontrol.Properties.Resources.resources
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software-github copy\PLDcontrol\obj\Release\PLDcontrol.csproj.GenerateResource.Cache
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\PLDcontrol.exe.config
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\obj\Release\PLDcontrol.exe
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\obj\Release\PLDcontrol.pdb
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\PLDcontrol.exe
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\PLDcontrol.pdb
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\AForge.dll
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\AForge.Video.DirectShow.dll
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\AForge.Video.dll
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\AForge.xml
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\AForge.Video.xml
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\bin\Release\AForge.Video.DirectShow.xml
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\obj\Release\PLDcontrol.csprojResolveAssemblyReference.cache
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\obj\Release\PLDcontrol.ConsoleWindow.resources
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\obj\Release\PLDcontrol.Form1.resources
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\obj\Release\PLDcontrol.Info.resources
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\obj\Release\PLDcontrol.Properties.Resources.resources
+C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\Control software\PLDcontrol\obj\Release\PLDcontrol.csproj.GenerateResource.Cache
