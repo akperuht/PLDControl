@@ -54,7 +54,6 @@ namespace PLDcontrol
         private SerialPort laserPort;
         private const int LASER_BAUD_RATE = 19200;
         private bool LaserOn = false;
-        private bool timer = false;
         private const string laserPortName = "COM1";
         private bool safety_switch = true;
         private bool laserMax = false;
@@ -74,7 +73,6 @@ namespace PLDcontrol
 
             fileLock = new dataTransfer();
             fileLock.locking = false;
-            webcam();
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
             updateTimer.Interval = 10;
@@ -84,6 +82,10 @@ namespace PLDcontrol
                 string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",ts.Hours, ts.Minutes, ts.Seconds,ts.Milliseconds / 10);
                 SetTimeText(elapsedTime);
             };
+
+            webcam();
+            DefineSerial();
+            DefineLaserSerial();
         }
 
         /// <summary>
@@ -238,8 +240,6 @@ namespace PLDcontrol
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DefineSerial();
-            DefineLaserSerial();
             Opacity = 0;
             //this.WindowState = FormWindowState.Maximized; //Starts with maximized window
             //this.MaximizeBox = true;
@@ -715,21 +715,23 @@ namespace PLDcontrol
         {
             // Laser is switched OFF
             if (LaserOn)
-            {laserSTOP(sender,e);}
+            {
+                laserSTOP(sender,e);
+            }
             // Laser is switched ON
             else
             {
                 if (!safety_switch) { SendMsgToLaser("[NL:START\\PC]"); } // Sending start message to laser
                 stopwatch.Start();
                 // Starting timer if that is enabled
-                if (timer)
+                if (timerCheckBox.Checked)
                 {
                     // Calculating timeinterval in seconds given by numeric controls
                     int timerSecs = (int)secNumericControl.Value;
                     int timerMin = (int)minNumericControl.Value;
                     int timerValue = timerMin * 60 + timerSecs;
                     laserTimer.Interval = timerValue*1000; // Interval in milliseconds
-                    laserTimer.Tick += new EventHandler(TimerEventProcessor);
+                    laserTimer.Tick += new EventHandler(laserSTOP);
                     laserTimer.Start();
                 }
                 // Changing button appearance
@@ -769,8 +771,12 @@ namespace PLDcontrol
         /// <param name="e"></param>
         private void laserSTOP(object sender, EventArgs e)
         {
-            SendMsgToLaser("[NL:STOP\\PC]"); // Send stop command to laser
             stopwatch.Stop();
+            SendMsgToLaser("[NL:STOP\\PC]"); // Send stop command to laser
+            laserTimer.Stop();
+            //Resetting timer, kind of a hack but don't know better way
+            laserTimer.Start();
+            laserTimer.Stop();
             // Changing button appearance
             laserOnOffButton.Text = "START";
             laserOnOffButton.BackColor = Color.Lime;
@@ -791,17 +797,6 @@ namespace PLDcontrol
             SendMsgToLaser("[NL:SAY\\PC]"); // Message is [NL:SAY\PC], but backslash is special character and hence needs to be doubled
         }
 
-        /// <summary>
-        /// Handles event when timer stops
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TimerEventProcessor(object sender, EventArgs e)
-        {
-            laserSTOP(sender, e);
-            timer = false;
-            laserTimer.Stop();
-        }
 
         /// <summary>
         /// Handles event when timer for laser enabled or disabled.
@@ -810,11 +805,9 @@ namespace PLDcontrol
         /// <param name="e"></param>
         private void timerCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (timerCheckBox.Checked){timer = true;}
-            else{timer = false;}
             // Disable or enable time controls depending timer bool value
-            minNumericControl.Enabled = timer;
-            secNumericControl.Enabled = timer;
+            minNumericControl.Enabled = timerCheckBox.Checked;
+            secNumericControl.Enabled = timerCheckBox.Checked;
         }
 
         /// <summary>
