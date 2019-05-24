@@ -39,6 +39,7 @@ namespace PLDcontrol
             this.loadControlFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.configureLaserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.communicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serialPortsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,7 +103,7 @@ namespace PLDcontrol
             this.laserPortLabel = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.configureLaserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.laserEnableCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -199,6 +200,12 @@ namespace PLDcontrol
             this.settingsToolStripMenuItem1.Text = "Advanced settings";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
             // 
+            // configureLaserToolStripMenuItem
+            // 
+            this.configureLaserToolStripMenuItem.Name = "configureLaserToolStripMenuItem";
+            this.configureLaserToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.configureLaserToolStripMenuItem.Text = "Configure laser";
+            // 
             // communicationToolStripMenuItem
             // 
             this.communicationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -212,7 +219,7 @@ namespace PLDcontrol
             // consoleToolStripMenuItem
             // 
             this.consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
-            this.consoleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.consoleToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.consoleToolStripMenuItem.Text = "Console";
             this.consoleToolStripMenuItem.Click += new System.EventHandler(this.consoleToolStripMenuItem_Click);
             // 
@@ -222,7 +229,7 @@ namespace PLDcontrol
             this.arduinoToolStripMenuItem,
             this.laserToolStripMenuItem});
             this.serialPortsToolStripMenuItem.Name = "serialPortsToolStripMenuItem";
-            this.serialPortsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.serialPortsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.serialPortsToolStripMenuItem.Text = "Serial ports";
             // 
             // arduinoToolStripMenuItem
@@ -230,7 +237,7 @@ namespace PLDcontrol
             this.arduinoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripComboBox1});
             this.arduinoToolStripMenuItem.Name = "arduinoToolStripMenuItem";
-            this.arduinoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.arduinoToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.arduinoToolStripMenuItem.Text = "Arduino";
             this.arduinoToolStripMenuItem.Click += new System.EventHandler(this.arduinoToolStripMenuItem_Click);
             // 
@@ -238,20 +245,20 @@ namespace PLDcontrol
             // 
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
-            this.toolStripComboBox1.SelectedIndexChanged+= new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
+            this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
             // 
             // laserToolStripMenuItem
             // 
             this.laserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cOM1ToolStripMenuItem});
             this.laserToolStripMenuItem.Name = "laserToolStripMenuItem";
-            this.laserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.laserToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.laserToolStripMenuItem.Text = "Laser";
             // 
             // cOM1ToolStripMenuItem
             // 
             this.cOM1ToolStripMenuItem.Name = "cOM1ToolStripMenuItem";
-            this.cOM1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cOM1ToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.cOM1ToolStripMenuItem.Text = "COM1";
             // 
             // helpToolStripMenuItem
@@ -749,6 +756,7 @@ namespace PLDcontrol
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.laserEnableCheckBox);
             this.panel2.Controls.Add(this.maxButton);
             this.panel2.Controls.Add(this.laserStatusButton);
             this.panel2.Controls.Add(this.label16);
@@ -777,9 +785,9 @@ namespace PLDcontrol
             // 
             // laserStatusButton
             // 
-            this.laserStatusButton.Location = new System.Drawing.Point(210, 58);
+            this.laserStatusButton.Location = new System.Drawing.Point(210, 69);
             this.laserStatusButton.Name = "laserStatusButton";
-            this.laserStatusButton.Size = new System.Drawing.Size(75, 23);
+            this.laserStatusButton.Size = new System.Drawing.Size(48, 21);
             this.laserStatusButton.TabIndex = 48;
             this.laserStatusButton.Text = "Status";
             this.laserStatusButton.UseVisualStyleBackColor = true;
@@ -925,11 +933,16 @@ namespace PLDcontrol
             this.panel6.TabIndex = 57;
             this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
             // 
-            // configureLaserToolStripMenuItem
+            // laserEnableCheckBox
             // 
-            this.configureLaserToolStripMenuItem.Name = "configureLaserToolStripMenuItem";
-            this.configureLaserToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.configureLaserToolStripMenuItem.Text = "Configure laser";
+            this.laserEnableCheckBox.AutoSize = true;
+            this.laserEnableCheckBox.Location = new System.Drawing.Point(210, 46);
+            this.laserEnableCheckBox.Name = "laserEnableCheckBox";
+            this.laserEnableCheckBox.Size = new System.Drawing.Size(84, 17);
+            this.laserEnableCheckBox.TabIndex = 50;
+            this.laserEnableCheckBox.Text = "Enable laser";
+            this.laserEnableCheckBox.UseVisualStyleBackColor = true;
+            this.laserEnableCheckBox.CheckedChanged += new System.EventHandler(this.laserEnableCheckBox_CheckedChanged);
             // 
             // Form1
             // 
@@ -1059,6 +1072,7 @@ namespace PLDcontrol
         private System.Windows.Forms.Button laserStatusButton;
         private System.Windows.Forms.RadioButton maxButton;
         private System.Windows.Forms.ToolStripMenuItem configureLaserToolStripMenuItem;
+        private System.Windows.Forms.CheckBox laserEnableCheckBox;
     }
 }
 

@@ -398,13 +398,13 @@ namespace PLDcontrol
         /// <param name="e"></param>
         private void LaserCommunicationHandler(object sender2, SerialDataReceivedEventArgs e)
         {
+            MessageBox.Show("Laser respond", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (laserPort.IsOpen)
             {
                 try
                 {
                     SerialPort sp2 = (SerialPort)sender2;
                     string laser_msg = sp2.ReadLine();
-                    System.Console.WriteLine(laser_msg);
                     if (laser_msg.StartsWith("[PC:READY")) { MessageBox.Show("Laser is ready", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information); };
                     writeLogFile("NL->PC: " + laser_msg);
                 }
@@ -490,8 +490,7 @@ namespace PLDcontrol
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex);
-                writeLogFile("Message sending error to laser:" + ex);
+                writeLogFile("Message sending error to laser:" + ex.Message);
                 MessageBox.Show("Error", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -805,6 +804,17 @@ namespace PLDcontrol
             SendMsgToLaser("[NL:SAY\\PC]"); // Message is [NL:SAY\PC], but backslash is special character and hence needs to be doubled
         }
 
+        private void laserEnableCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (laserEnableCheckBox.Checked)
+            {
+                safety_switch = false;
+            }
+            else
+            {
+                safety_switch = true;
+            }
+        }
 
         /// <summary>
         /// Handles event when timer for laser enabled or disabled.
@@ -974,6 +984,5 @@ namespace PLDcontrol
         {
             //
         }
-
     }
 }
