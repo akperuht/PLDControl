@@ -34,8 +34,8 @@ namespace PLDcontrol
         private const int BAUD_RATE = 9600; // Serial communication baud rate
 
         // Logfile with .aki extension, the best among all extensions
-        private const string filename = "pldcontrol_log_file.aki";
-
+        //private const string LOGFILE_PATH = @"%USERPROFILE%\\AppData\\Ruhtinas Software\\Data\\pldcontrol_log_file.aki";
+        private string filename= "pldcontrol_log_file.aki";
         // Asyncrohonous reading and writing logfile 
         public dataTransfer fileLock;
         private const int ASYNC_DELAY = 5;
@@ -67,6 +67,14 @@ namespace PLDcontrol
             timer.Interval = 3000;
             timer.Start();
             timer.Tick += delegate { Opacity = 100; };
+
+            //filename = Environment.ExpandEnvironmentVariables(LOGFILE_PATH);
+            /*DirectoryInfo di = new DirectoryInfo(filename);
+
+            if (!di.Exists)
+            {
+                di.Create();
+            }*/
             InitializeComponent();
             ClearLogFile(); // Clears previous logfile
             InitializeForm();
@@ -280,7 +288,7 @@ namespace PLDcontrol
                 laserPort.Parity = Parity.None;
                 laserPort.Open();
                 laserPortLabel.Text = laserPortName;
-                port.DataReceived += new SerialDataReceivedEventHandler(LaserCommunicationHandler);
+                laserPort.DataReceived += new SerialDataReceivedEventHandler(LaserCommunicationHandler);
             }
             catch (Exception ex)
             {
@@ -361,8 +369,8 @@ namespace PLDcontrol
                         // Reading data values to variables
                         try
                         {
-                            ArFlow = Double.Parse(data_splitted[0], CultureInfo.InvariantCulture);
-                            N2Flow = Double.Parse(data_splitted[1], CultureInfo.InvariantCulture);
+                            ArFlow = Double.Parse(data_splitted[1], CultureInfo.InvariantCulture);
+                            N2Flow = Double.Parse(data_splitted[0], CultureInfo.InvariantCulture);
                             chamberTemperature = Double.Parse(data_splitted[2], CultureInfo.InvariantCulture);
                         }
                         catch(Exception ex){ System.Console.WriteLine(ex.Message); }
@@ -388,17 +396,17 @@ namespace PLDcontrol
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LaserCommunicationHandler(object sender, SerialDataReceivedEventArgs e)
+        private void LaserCommunicationHandler(object sender2, SerialDataReceivedEventArgs e)
         {
             if (laserPort.IsOpen)
             {
                 try
                 {
-                    SerialPort sp = (SerialPort)sender;
-                    string device_msg = sp.ReadLine();
-                    System.Console.WriteLine(device_msg);
-                    if (device_msg.StartsWith("[PC:READY")) { MessageBox.Show("Laser is ready", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error); };
-                    writeLogFile("NL->PC: " + device_msg);
+                    SerialPort sp2 = (SerialPort)sender2;
+                    string laser_msg = sp2.ReadLine();
+                    System.Console.WriteLine(laser_msg);
+                    if (laser_msg.StartsWith("[PC:READY")) { MessageBox.Show("Laser is ready", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information); };
+                    writeLogFile("NL->PC: " + laser_msg);
                 }
                 catch (IOException ex)
                 {
