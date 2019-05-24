@@ -1,8 +1,2 @@
-24.05.2019 11.49.06 > Porttia COM1 ei ole.
-
-24.05.2019 11.49.21 > Message sending error to laser:System.IO.IOException: Porttia COM1 ei ole.
-   kohteessa System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
-   kohteessa System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
-   kohteessa System.IO.Ports.SerialPort.Open()
-   kohteessa PLDcontrol.Form1.SendMsgToLaser(String message) tiedostossa C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDcontrol\Form1.cs:rivillä 486
+24.05.2019 14.56.28 > Porttia COM1 ei ole.
 

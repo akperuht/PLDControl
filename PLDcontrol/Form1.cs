@@ -283,11 +283,21 @@ namespace PLDcontrol
         {
             try
             {
+                // Making new serial port object with 
+                // settings suitable communication with Ekspla NL301 laser
                 laserPort = new SerialPort(laserPortName, LASER_BAUD_RATE);
                 laserPort.DataBits = 8;
+                laserPort.StopBits = StopBits.One;
                 laserPort.Parity = Parity.None;
+                laserPort.DtrEnable = false; //Data terminal ready not in use (pin 4)
+
+                // Opening the serial port
                 laserPort.Open();
+
+                // Setting laser serial port name to corresponding label
                 laserPortLabel.Text = laserPortName;
+
+                // Giving messagehandler when data is received to serial port
                 laserPort.DataReceived += new SerialDataReceivedEventHandler(LaserCommunicationHandler);
             }
             catch (Exception ex)
