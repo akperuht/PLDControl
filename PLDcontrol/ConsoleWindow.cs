@@ -17,12 +17,11 @@ namespace PLDcontrol
     /// </summary>
     public partial class ConsoleWindow : Form
     {
-        private const string filename = "pldcontrol_log_file.aki";
-
         // Threading for setting text to richtextbox
         delegate void SetTextCallback(string text);
         private Thread logThread = null;
-
+        private string filename = "pldcontrol_log_file.aki";
+        private string path;
         // Waiting time for logfile lock
         private const int ASYNC_DELAY = 5;
 
@@ -39,9 +38,11 @@ namespace PLDcontrol
         /// <param name="mainlock">object to pass boolean value for file locking</param>
         public ConsoleWindow(dataTransfer mainlock)
         {
+            fileLock = mainlock; // locking object for logfile
+            System.Console.WriteLine(path + filename);
+            path = Path.Combine(fileLock.filepath, filename);
             InitializeComponent();
             InitializeLogging();
-            fileLock = mainlock; // locking object for logfile
             // Closing created filesystem watcher when form closes. Not necessary but to be sure
             this.FormClosed += delegate { watcher.EnableRaisingEvents = false; watcher.Dispose(); };
         }
@@ -53,7 +54,7 @@ namespace PLDcontrol
         {
             // Creating watcher to detect changes in logfile
             watcher = new FileSystemWatcher();
-            watcher.Path = System.Environment.CurrentDirectory;
+            watcher.Path = fileLock.filepath;
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.Filter = "*.aki"; // logfile extension is .aki, the best extension ever
             watcher.Changed += delegate {ReadLogfile(); }; // Raises event when logfile is changed
@@ -72,7 +73,7 @@ namespace PLDcontrol
                 if (!fileLock.locking)
                 {
                     fileLock.locking = true; // locking the logfile during reading
-                    using (System.IO.StreamReader file = new System.IO.StreamReader(filename))
+                    using (System.IO.StreamReader file = new System.IO.StreamReader(path + filename))
                     {
                         string text = file.ReadToEnd();
                         SetText(text); // setting text to richtextbox in another thread

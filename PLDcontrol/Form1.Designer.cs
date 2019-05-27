@@ -90,6 +90,8 @@ namespace PLDcontrol
             this.label16 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.offradioButton = new System.Windows.Forms.RadioButton();
+            this.adjRadioButton = new System.Windows.Forms.RadioButton();
             this.maxButton = new System.Windows.Forms.RadioButton();
             this.laserStatusButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -103,7 +105,6 @@ namespace PLDcontrol
             this.laserPortLabel = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.laserEnableCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -298,7 +299,7 @@ namespace PLDcontrol
             // trackBar1
             // 
             this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBar1.Location = new System.Drawing.Point(26, 74);
+            this.trackBar1.Location = new System.Drawing.Point(60, 74);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(227, 45);
             this.trackBar1.TabIndex = 11;
@@ -306,7 +307,7 @@ namespace PLDcontrol
             // trackBar2
             // 
             this.trackBar2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBar2.Location = new System.Drawing.Point(26, 202);
+            this.trackBar2.Location = new System.Drawing.Point(60, 202);
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(227, 45);
             this.trackBar2.TabIndex = 12;
@@ -416,7 +417,7 @@ namespace PLDcontrol
             // motorStopButton
             // 
             this.motorStopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.motorStopButton.Location = new System.Drawing.Point(101, 45);
+            this.motorStopButton.Location = new System.Drawing.Point(135, 45);
             this.motorStopButton.Name = "motorStopButton";
             this.motorStopButton.Size = new System.Drawing.Size(75, 23);
             this.motorStopButton.TabIndex = 21;
@@ -427,7 +428,7 @@ namespace PLDcontrol
             // motorRightButton
             // 
             this.motorRightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.motorRightButton.Location = new System.Drawing.Point(182, 45);
+            this.motorRightButton.Location = new System.Drawing.Point(216, 45);
             this.motorRightButton.Name = "motorRightButton";
             this.motorRightButton.Size = new System.Drawing.Size(75, 23);
             this.motorRightButton.TabIndex = 22;
@@ -438,7 +439,7 @@ namespace PLDcontrol
             // motorLeftButton
             // 
             this.motorLeftButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.motorLeftButton.Location = new System.Drawing.Point(20, 45);
+            this.motorLeftButton.Location = new System.Drawing.Point(54, 45);
             this.motorLeftButton.Name = "motorLeftButton";
             this.motorLeftButton.Size = new System.Drawing.Size(75, 23);
             this.motorLeftButton.TabIndex = 23;
@@ -452,7 +453,7 @@ namespace PLDcontrol
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(81, 8);
+            this.label7.Location = new System.Drawing.Point(115, 8);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(120, 24);
             this.label7.TabIndex = 24;
@@ -461,7 +462,7 @@ namespace PLDcontrol
             // goToButton
             // 
             this.goToButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.goToButton.Location = new System.Drawing.Point(20, 101);
+            this.goToButton.Location = new System.Drawing.Point(54, 101);
             this.goToButton.Name = "goToButton";
             this.goToButton.Size = new System.Drawing.Size(75, 23);
             this.goToButton.TabIndex = 25;
@@ -472,7 +473,7 @@ namespace PLDcontrol
             // goToValueNumeric
             // 
             this.goToValueNumeric.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.goToValueNumeric.Location = new System.Drawing.Point(122, 104);
+            this.goToValueNumeric.Location = new System.Drawing.Point(156, 104);
             this.goToValueNumeric.Minimum = new decimal(new int[] {
             100,
             0,
@@ -487,7 +488,7 @@ namespace PLDcontrol
             // 
             this.sweepCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.sweepCheckBox.AutoSize = true;
-            this.sweepCheckBox.Location = new System.Drawing.Point(20, 150);
+            this.sweepCheckBox.Location = new System.Drawing.Point(54, 150);
             this.sweepCheckBox.Name = "sweepCheckBox";
             this.sweepCheckBox.Size = new System.Drawing.Size(59, 17);
             this.sweepCheckBox.TabIndex = 27;
@@ -498,7 +499,7 @@ namespace PLDcontrol
             // sweepButton
             // 
             this.sweepButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sweepButton.Location = new System.Drawing.Point(20, 224);
+            this.sweepButton.Location = new System.Drawing.Point(54, 224);
             this.sweepButton.Name = "sweepButton";
             this.sweepButton.Size = new System.Drawing.Size(75, 23);
             this.sweepButton.TabIndex = 28;
@@ -509,7 +510,7 @@ namespace PLDcontrol
             // rangeNumeric
             // 
             this.rangeNumeric.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.rangeNumeric.Location = new System.Drawing.Point(74, 183);
+            this.rangeNumeric.Location = new System.Drawing.Point(108, 183);
             this.rangeNumeric.Name = "rangeNumeric";
             this.rangeNumeric.Size = new System.Drawing.Size(73, 20);
             this.rangeNumeric.TabIndex = 29;
@@ -517,7 +518,7 @@ namespace PLDcontrol
             // midPointNumeric
             // 
             this.midPointNumeric.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.midPointNumeric.Location = new System.Drawing.Point(231, 183);
+            this.midPointNumeric.Location = new System.Drawing.Point(265, 183);
             this.midPointNumeric.Minimum = new decimal(new int[] {
             100,
             0,
@@ -531,7 +532,7 @@ namespace PLDcontrol
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(22, 185);
+            this.label8.Location = new System.Drawing.Point(56, 185);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(39, 13);
             this.label8.TabIndex = 31;
@@ -541,7 +542,7 @@ namespace PLDcontrol
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(175, 185);
+            this.label9.Location = new System.Drawing.Point(209, 185);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(47, 13);
             this.label9.TabIndex = 32;
@@ -553,7 +554,7 @@ namespace PLDcontrol
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(25, 51);
+            this.label10.Location = new System.Drawing.Point(59, 51);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(135, 16);
             this.label10.TabIndex = 33;
@@ -565,7 +566,7 @@ namespace PLDcontrol
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(28, 166);
+            this.label11.Location = new System.Drawing.Point(62, 166);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(120, 16);
             this.label11.TabIndex = 34;
@@ -594,7 +595,7 @@ namespace PLDcontrol
             0,
             0,
             131072});
-            this.ArFlowNumericControl.Location = new System.Drawing.Point(31, 246);
+            this.ArFlowNumericControl.Location = new System.Drawing.Point(65, 246);
             this.ArFlowNumericControl.Maximum = new decimal(new int[] {
             10,
             0,
@@ -614,7 +615,7 @@ namespace PLDcontrol
             0,
             0,
             131072});
-            this.N2FlowNumericControl.Location = new System.Drawing.Point(28, 115);
+            this.N2FlowNumericControl.Location = new System.Drawing.Point(62, 115);
             this.N2FlowNumericControl.Maximum = new decimal(new int[] {
             10,
             0,
@@ -630,7 +631,7 @@ namespace PLDcontrol
             this.laserOnOffButton.BackColor = System.Drawing.Color.Lime;
             this.laserOnOffButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.laserOnOffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.laserOnOffButton.Location = new System.Drawing.Point(19, 58);
+            this.laserOnOffButton.Location = new System.Drawing.Point(57, 27);
             this.laserOnOffButton.Name = "laserOnOffButton";
             this.laserOnOffButton.Size = new System.Drawing.Size(128, 55);
             this.laserOnOffButton.TabIndex = 38;
@@ -642,7 +643,7 @@ namespace PLDcontrol
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(81, 14);
+            this.label2.Location = new System.Drawing.Point(131, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 24);
             this.label2.TabIndex = 39;
@@ -653,7 +654,7 @@ namespace PLDcontrol
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(81, 7);
+            this.label12.Location = new System.Drawing.Point(115, 7);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(143, 24);
             this.label12.TabIndex = 40;
@@ -682,7 +683,7 @@ namespace PLDcontrol
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(161, 117);
+            this.label13.Location = new System.Drawing.Point(195, 117);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(32, 13);
             this.label13.TabIndex = 43;
@@ -692,7 +693,7 @@ namespace PLDcontrol
             // 
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(161, 246);
+            this.label14.Location = new System.Drawing.Point(195, 246);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(32, 13);
             this.label14.TabIndex = 44;
@@ -746,9 +747,9 @@ namespace PLDcontrol
             this.panel1.Controls.Add(this.motorLeftButton);
             this.panel1.Controls.Add(this.motorRightButton);
             this.panel1.Controls.Add(this.motorStopButton);
-            this.panel1.Location = new System.Drawing.Point(1166, 537);
+            this.panel1.Location = new System.Drawing.Point(1132, 537);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(330, 284);
+            this.panel1.Size = new System.Drawing.Size(364, 284);
             this.panel1.TabIndex = 48;
             // 
             // panel2
@@ -756,7 +757,8 @@ namespace PLDcontrol
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.laserEnableCheckBox);
+            this.panel2.Controls.Add(this.offradioButton);
+            this.panel2.Controls.Add(this.adjRadioButton);
             this.panel2.Controls.Add(this.maxButton);
             this.panel2.Controls.Add(this.laserStatusButton);
             this.panel2.Controls.Add(this.label16);
@@ -766,31 +768,61 @@ namespace PLDcontrol
             this.panel2.Controls.Add(this.timerCheckBox);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.laserOnOffButton);
-            this.panel2.Location = new System.Drawing.Point(1166, 331);
+            this.panel2.Location = new System.Drawing.Point(1132, 331);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(330, 200);
+            this.panel2.Size = new System.Drawing.Size(364, 200);
             this.panel2.TabIndex = 49;
+            // 
+            // offradioButton
+            // 
+            this.offradioButton.AutoSize = true;
+            this.offradioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.offradioButton.Location = new System.Drawing.Point(80, 101);
+            this.offradioButton.Name = "offradioButton";
+            this.offradioButton.Size = new System.Drawing.Size(49, 24);
+            this.offradioButton.TabIndex = 52;
+            this.offradioButton.TabStop = true;
+            this.offradioButton.Text = "Off";
+            this.offradioButton.UseVisualStyleBackColor = true;
+            this.offradioButton.CheckedChanged += new System.EventHandler(this.offradioButton_CheckedChanged);
+            // 
+            // adjRadioButton
+            // 
+            this.adjRadioButton.AutoSize = true;
+            this.adjRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.adjRadioButton.Location = new System.Drawing.Point(155, 101);
+            this.adjRadioButton.Name = "adjRadioButton";
+            this.adjRadioButton.Size = new System.Drawing.Size(72, 24);
+            this.adjRadioButton.TabIndex = 51;
+            this.adjRadioButton.TabStop = true;
+            this.adjRadioButton.Text = "Adjust";
+            this.adjRadioButton.UseVisualStyleBackColor = true;
+            this.adjRadioButton.CheckedChanged += new System.EventHandler(this.adjRadioButton_CheckedChanged);
             // 
             // maxButton
             // 
             this.maxButton.AutoSize = true;
-            this.maxButton.Location = new System.Drawing.Point(210, 95);
+            this.maxButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.maxButton.Location = new System.Drawing.Point(238, 101);
             this.maxButton.Name = "maxButton";
-            this.maxButton.Size = new System.Drawing.Size(48, 17);
+            this.maxButton.Size = new System.Drawing.Size(56, 24);
             this.maxButton.TabIndex = 49;
             this.maxButton.TabStop = true;
-            this.maxButton.Text = "MAX";
+            this.maxButton.Text = "Max";
             this.maxButton.UseVisualStyleBackColor = true;
             this.maxButton.CheckedChanged += new System.EventHandler(this.maxButton_CheckedChanged);
             // 
             // laserStatusButton
             // 
-            this.laserStatusButton.Location = new System.Drawing.Point(210, 69);
+            this.laserStatusButton.BackColor = System.Drawing.Color.Orange;
+            this.laserStatusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.laserStatusButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.laserStatusButton.Location = new System.Drawing.Point(212, 27);
             this.laserStatusButton.Name = "laserStatusButton";
-            this.laserStatusButton.Size = new System.Drawing.Size(48, 21);
+            this.laserStatusButton.Size = new System.Drawing.Size(111, 55);
             this.laserStatusButton.TabIndex = 48;
             this.laserStatusButton.Text = "Status";
-            this.laserStatusButton.UseVisualStyleBackColor = true;
+            this.laserStatusButton.UseVisualStyleBackColor = false;
             this.laserStatusButton.Click += new System.EventHandler(this.laserStatusButton_Click);
             // 
             // panel3
@@ -807,9 +839,9 @@ namespace PLDcontrol
             this.panel3.Controls.Add(this.label10);
             this.panel3.Controls.Add(this.trackBar2);
             this.panel3.Controls.Add(this.trackBar1);
-            this.panel3.Location = new System.Drawing.Point(1166, 33);
+            this.panel3.Location = new System.Drawing.Point(1132, 33);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(330, 292);
+            this.panel3.Size = new System.Drawing.Size(364, 292);
             this.panel3.TabIndex = 50;
             // 
             // pictureBox2
@@ -888,9 +920,9 @@ namespace PLDcontrol
             this.panel5.Controls.Add(this.label18);
             this.panel5.Controls.Add(this.currentPortLabel);
             this.panel5.Controls.Add(this.label1);
-            this.panel5.Location = new System.Drawing.Point(1166, 830);
+            this.panel5.Location = new System.Drawing.Point(1132, 830);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(330, 102);
+            this.panel5.Size = new System.Drawing.Size(364, 102);
             this.panel5.TabIndex = 56;
             // 
             // laserPortLabel
@@ -932,17 +964,6 @@ namespace PLDcontrol
             this.panel6.Size = new System.Drawing.Size(1108, 548);
             this.panel6.TabIndex = 57;
             this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
-            // 
-            // laserEnableCheckBox
-            // 
-            this.laserEnableCheckBox.AutoSize = true;
-            this.laserEnableCheckBox.Location = new System.Drawing.Point(210, 46);
-            this.laserEnableCheckBox.Name = "laserEnableCheckBox";
-            this.laserEnableCheckBox.Size = new System.Drawing.Size(84, 17);
-            this.laserEnableCheckBox.TabIndex = 50;
-            this.laserEnableCheckBox.Text = "Enable laser";
-            this.laserEnableCheckBox.UseVisualStyleBackColor = true;
-            this.laserEnableCheckBox.CheckedChanged += new System.EventHandler(this.laserEnableCheckBox_CheckedChanged);
             // 
             // Form1
             // 
@@ -1072,7 +1093,8 @@ namespace PLDcontrol
         private System.Windows.Forms.Button laserStatusButton;
         private System.Windows.Forms.RadioButton maxButton;
         private System.Windows.Forms.ToolStripMenuItem configureLaserToolStripMenuItem;
-        private System.Windows.Forms.CheckBox laserEnableCheckBox;
+        private System.Windows.Forms.RadioButton offradioButton;
+        private System.Windows.Forms.RadioButton adjRadioButton;
     }
 }
 

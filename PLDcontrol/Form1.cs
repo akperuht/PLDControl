@@ -34,8 +34,8 @@ namespace PLDcontrol
         private const int BAUD_RATE = 9600; // Serial communication baud rate
 
         // Logfile with .aki extension, the best among all extensions
-        //private const string LOGFILE_PATH = @"%USERPROFILE%\\AppData\\Ruhtinas Software\\Data\\pldcontrol_log_file.aki";
-        private string filename= "pldcontrol_log_file.aki";
+        private string logfilename= @"\Ruhtinas Software\Data\pldcontrol_log_file.aki";
+        private string filename;
         // Asyncrohonous reading and writing logfile 
         public dataTransfer fileLock;
         private const int ASYNC_DELAY = 5;
@@ -55,8 +55,6 @@ namespace PLDcontrol
         private const int LASER_BAUD_RATE = 19200;
         private bool LaserOn = false;
         private const string laserPortName = "COM1";
-        private bool safety_switch = true;
-        private bool laserMax = false;
 
         /// <summary>
         /// Constructor of the class
@@ -68,19 +66,22 @@ namespace PLDcontrol
             timer.Start();
             timer.Tick += delegate { Opacity = 100; };
 
-            //filename = Environment.ExpandEnvironmentVariables(LOGFILE_PATH);
-            /*DirectoryInfo di = new DirectoryInfo(filename);
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            path = Path.Combine(path,"\\Ruhtinas Software\\Data\\");
+            DirectoryInfo di = new DirectoryInfo(path);
 
             if (!di.Exists)
             {
                 di.Create();
-            }*/
+            }
+            filename = Path.Combine(path,logfilename);
             InitializeComponent();
             ClearLogFile(); // Clears previous logfile
             InitializeForm();
 
             fileLock = new dataTransfer();
             fileLock.locking = false;
+            fileLock.filepath = path;
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
             updateTimer.Interval = 10;
@@ -94,6 +95,8 @@ namespace PLDcontrol
             webcam();
             DefineSerial();
             DefineLaserSerial();
+
+            offradioButton.Checked = true;
         }
 
         /// <summary>
@@ -111,7 +114,6 @@ namespace PLDcontrol
             secNumericControl.Enabled = false;
 
             toolStripComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-
             // Extracting port names
             ports = SerialPort.GetPortNames();
             if (ports.Length != 0)
@@ -258,22 +260,30 @@ namespace PLDcontrol
         /// </summary>
         private void DefineSerial()
         {
-            if (port != null && port.IsOpen) { port.Close(); };
-            port = null;
-            
-            /// Setting up arduino serial communication
-            if (ports.Length != 0)
+            try
             {
-                currentPort = (string)toolStripComboBox1.SelectedItem;
-                port = new SerialPort((string)toolStripComboBox1.SelectedItem, BAUD_RATE);
-                port.RtsEnable = false; //leonardo
-                port.DtrEnable = true; //leonardo
+                if (port != null && port.IsOpen) { port.Close(); };
+                port = null;
 
-                
-                port.Open();
-                if (currentPort != null) currentPortLabel.Text = currentPort;
-                port.DataReceived+= new SerialDataReceivedEventHandler(ArduinoCommunicationHandler);
+                /// Setting up arduino serial communication
+                if (ports.Length != 0)
+                {
+                    currentPort = (string)toolStripComboBox1.SelectedItem;
+                    port = new SerialPort((string)toolStripComboBox1.SelectedItem, BAUD_RATE);
+                    port.RtsEnable = false; //leonardo
+                    port.DtrEnable = true; //leonardo
+
+
+                    port.Open();
+                    if (currentPort != null) currentPortLabel.Text = currentPort;
+                    port.DataReceived += new SerialDataReceivedEventHandler(ArduinoCommunicationHandler);
+                }
             }
+            catch(Exception ex)
+            {
+                writeLogFile(ex.Message);
+            }
+
         }
 
         /// <summary>
@@ -408,13 +418,10 @@ namespace PLDcontrol
         /// <param name="e"></param>
         private void LaserCommunicationHandler(object sender2, SerialDataReceivedEventArgs e)
         {
-            MessageBox.Show("Laser respond", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            if (laserPort.IsOpen)
-            {
                 try
                 {
                     SerialPort sp2 = (SerialPort)sender2;
-                    string laser_msg = sp2.ReadLine();
+                    string laser_msg = sp2.ReadExisting();
                     if (laser_msg.StartsWith("[PC:READY")) { MessageBox.Show("Laser is ready", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information); };
                     writeLogFile("NL->PC: " + laser_msg);
                 }
@@ -422,7 +429,6 @@ namespace PLDcontrol
                 {
                     System.Console.WriteLine(ex.Message);
                 }
-            }
         }
 
         /// <summary>
@@ -738,7 +744,7 @@ namespace PLDcontrol
             // Laser is switched ON
             else
             {
-                if (!safety_switch) { SendMsgToLaser("[NL:START\\PC]"); } // Sending start message to laser
+                if (!offradioButton.Checked) { SendMsgToLaser("[NL:START\\PC]"); } // Sending start message to laser
                 stopwatch.Start();
                 // Starting timer if that is enabled
                 if (timerCheckBox.Checked)
@@ -773,11 +779,41 @@ namespace PLDcontrol
             if (maxButton.Checked)
             {
                 SendMsgToLaser("[NL:E0/S2\\PC]");// Set output to max
-                MessageBox.Show("Laser mode set to MAX", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Laser output mode set to max", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                offradioButton.Checked = false;
+                adjRadioButton.Checked = false;
             }
-            else
+        }
+
+        /// <summary>
+        /// Handler for laser off radiobutton click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void offradioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (offradioButton.Checked)
             {
-                // TODO: Vastakkainen käsky
+                SendMsgToLaser("[NL:E0/S0\\PC]");// Set electrooptics off
+                MessageBox.Show("Laser electrooptics switched off", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                maxButton.Checked = false;
+                adjRadioButton.Checked = false;
+            }
+        }
+
+        /// <summary>
+        /// Handler for laser mode to adjust radiobutton click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void adjRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (adjRadioButton.Checked)
+            {
+                SendMsgToLaser("[NL:E0/S1\\PC]");// Set output to adjust mode
+                MessageBox.Show("Laser output mode set to adjust", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                offradioButton.Checked = false;
+                maxButton.Checked = false;
             }
         }
 
@@ -812,18 +848,7 @@ namespace PLDcontrol
         private void laserStatusButton_Click(object sender, EventArgs e)
         {
             SendMsgToLaser("[NL:SAY\\PC]"); // Message is [NL:SAY\PC], but backslash is special character and hence needs to be doubled
-        }
-
-        private void laserEnableCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (laserEnableCheckBox.Checked)
-            {
-                safety_switch = false;
-            }
-            else
-            {
-                safety_switch = true;
-            }
+            SendMsgToLaser("[NL:SAY\\PC]");
         }
 
         /// <summary>
@@ -886,7 +911,6 @@ namespace PLDcontrol
                 this.timerLabel.Text = text;
             }
         }
-
 
 
         /// <summary>
