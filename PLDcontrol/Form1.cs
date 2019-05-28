@@ -53,6 +53,7 @@ namespace PLDcontrol
 
         private SerialPort laserPort;
         private const int LASER_BAUD_RATE = 19200;
+        private string buffer;
         private bool LaserOn = false;
         private const string laserPortName = "COM1";
 
@@ -92,10 +93,15 @@ namespace PLDcontrol
                 SetTimeText(elapsedTime);
             };
 
+            // Starting camera capture
             webcam();
+
+            // Setting up serial communications
             DefineSerial();
             DefineLaserSerial();
 
+            // Initialization of laser serial messaging buffer
+            buffer = "";
             offradioButton.Checked = true;
         }
 
@@ -418,17 +424,24 @@ namespace PLDcontrol
         /// <param name="e"></param>
         private void LaserCommunicationHandler(object sender2, SerialDataReceivedEventArgs e)
         {
-                try
+            try
+            {
+                SerialPort sp2 = (SerialPort)sender2;
+                buffer += sp2.ReadExisting();
+
+                //test for termination character in buffer
+                if (buffer.Contains("]"))
                 {
-                    SerialPort sp2 = (SerialPort)sender2;
-                    string laser_msg = sp2.ReadExisting();
-                    if (laser_msg.StartsWith("[PC:READY")) { MessageBox.Show("Laser is ready", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information); };
+                    string laser_msg = buffer.Split(':', '\\')[1];
                     writeLogFile("NL->PC: " + laser_msg);
+                    if (laser_msg=="READY") { MessageBox.Show("Laser is ready", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+                    buffer = "";
                 }
-                catch (IOException ex)
-                {
-                    System.Console.WriteLine(ex.Message);
-                }
+            }
+            catch (IOException ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>

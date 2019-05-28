@@ -39,8 +39,7 @@ namespace PLDcontrol
         public ConsoleWindow(dataTransfer mainlock)
         {
             fileLock = mainlock; // locking object for logfile
-            System.Console.WriteLine(path + filename);
-            path = Path.Combine(fileLock.filepath, filename);
+            path = fileLock.filepath;
             InitializeComponent();
             InitializeLogging();
             // Closing created filesystem watcher when form closes. Not necessary but to be sure
