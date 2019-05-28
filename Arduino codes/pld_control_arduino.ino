@@ -201,8 +201,13 @@ void setFlow(double setPoint1, double setPoint2){
  * Reads measured gas flow value
  */
 void readFlow(){
+  // N2 flow value
   flowVal1=(analogRead(A3)/1023.0)*10; // Scaling value to 10 sccm
+
+  // Argon flow value
   flowVal2=(analogRead(A2)/1023.0)*10;
+  // Using K value to convert to real flow
+  flowVal2*1.4573;
 }
 
 /* ==========================================================
