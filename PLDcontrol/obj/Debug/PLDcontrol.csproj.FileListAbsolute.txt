@@ -66,3 +66,22 @@ C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDc
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDcontrol\obj\Debug\PLDcontrol.Info.resources
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDcontrol\obj\Debug\PLDcontrol.Properties.Resources.resources
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDcontrol\obj\Debug\PLDcontrol.csproj.GenerateResource.Cache
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\PLDcontrol.exe.config
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\PLDcontrol.exe
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\PLDcontrol.pdb
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\AForge.dll
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\AForge.Video.DirectShow.dll
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\AForge.Video.dll
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\AForge.xml
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\AForge.Video.xml
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Debug\AForge.Video.DirectShow.xml
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.ConsoleWindow.resources
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.Form1.resources
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.Info.resources
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.Properties.Resources.resources
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.csproj.GenerateResource.cache
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.csproj.CoreCompileInputs.cache
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.csproj.CopyComplete
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.exe
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.pdb
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Debug\PLDcontrol.csprojAssemblyReference.cache

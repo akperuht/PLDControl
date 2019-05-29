@@ -56,6 +56,11 @@ namespace PLDcontrol
         private string buffer;
         private bool LaserOn = false;
         private const string laserPortName = "COM1";
+        private int eoDelayMa = 0;
+        private int eoDelayAd = 0;
+        private double laserTemp = 0;
+        private string laserMode = "OFF";
+        private string laserStatus = "";
 
         /// <summary>
         /// Constructor of the class
@@ -432,9 +437,43 @@ namespace PLDcontrol
                 //test for termination character in buffer
                 if (buffer.Contains("]"))
                 {
-                    string laser_msg = buffer.Split(':', '\\')[1];
-                    writeLogFile("NL->PC: " + laser_msg);
-                    if (laser_msg=="READY") { MessageBox.Show("Laser is ready", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+                    var laser_messages = buffer.Split('[',']');
+                    foreach( string msg in laser_messages)
+                    {
+                        try
+                        {
+                            var laser_msg = msg.Split(':', '\\')[1];
+                            writeLogFile("NL->PC: " + laser_msg);
+                            if (laser_msg.StartsWith("E0"))
+                            {
+                                Int32.TryParse(laser_msg.Split('S')[1],out int mode);
+                                if (mode == 0) { laserMode = "OFF"; }
+                                if (mode == 1) { laserMode = "ADJUST"; }
+                                if (mode == 2) { laserMode = "MAX"; }
+                            }
+                            if(laser_msg.StartsWith("READY"))
+                            {
+                                try
+                                {
+                                    Int32.TryParse(laser_msg.Split('=')[1], out int problemNumber);
+                                }
+                                catch(Exception ex) { }
+                                laserStatus = "Ready";
+                            }
+                            if (laser_msg.StartsWith("U2")) { laserTemp=Double.Parse(laser_msg.Split('S')[1], CultureInfo.InvariantCulture); }
+                            if (laser_msg.StartsWith("D0")) { Int32.TryParse(laser_msg.Split('S')[1], out eoDelayMa); }
+                            if (laser_msg.StartsWith("D1"))
+                            {
+                                Int32.TryParse(laser_msg.Split('S')[1], out eoDelayAd);
+                                MessageBox.Show("Laser status: " + laserStatus + Environment.NewLine +
+                                    "Laser mode: " + laserMode + Environment.NewLine+
+                                    "Cooling water temperature: " + laserTemp + Environment.NewLine+
+                                    "Electro-optics delay in MAX: " + eoDelayMa + Environment.NewLine+
+                                    "Electro-optics delay in ADJ: " + eoDelayAd + Environment.NewLine);
+                            }
+                        }
+                        catch (System.IndexOutOfRangeException ex) { /*Nothing to see here*/ }
+                    }
                     buffer = "";
                 }
             }
@@ -860,8 +899,21 @@ namespace PLDcontrol
         /// <param name="e"></param>
         private void laserStatusButton_Click(object sender, EventArgs e)
         {
+            // Ask status from laser
             SendMsgToLaser("[NL:SAY\\PC]"); // Message is [NL:SAY\PC], but backslash is special character and hence needs to be doubled
-            SendMsgToLaser("[NL:SAY\\PC]");
+            // Ask laser mode 
+            Thread.Sleep(100);
+            SendMsgToLaser("[NL:E0/?\\PC]");
+            Thread.Sleep(100);
+            // Ask cooling water temperature from laser
+            SendMsgToLaser("[NL:U2/?\\PC]");
+            Thread.Sleep(100);
+            // Ask electro-optics delay in max mode
+            SendMsgToLaser("[NL:D0/?\\PC]");
+            Thread.Sleep(100);
+            // Ask electro-optics delay in adjust mode
+            SendMsgToLaser("[NL:D1/?\\PC]");
+            Thread.Sleep(100);
         }
 
         /// <summary>

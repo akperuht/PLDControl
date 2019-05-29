@@ -66,3 +66,22 @@ C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDc
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDcontrol\obj\Release\PLDcontrol.Info.resources
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDcontrol\obj\Release\PLDcontrol.Properties.Resources.resources
 C:\Users\Aki Ruhtinas\Documents\Fysiikka\Pro Gradu\PLD\PLD Control software\PLDcontrol\obj\Release\PLDcontrol.csproj.GenerateResource.Cache
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\PLDcontrol.exe.config
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\PLDcontrol.exe
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\PLDcontrol.pdb
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\AForge.dll
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\AForge.Video.DirectShow.dll
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\AForge.Video.dll
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\AForge.xml
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\AForge.Video.xml
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\bin\Release\AForge.Video.DirectShow.xml
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.csprojAssemblyReference.cache
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.ConsoleWindow.resources
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.Form1.resources
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.Info.resources
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.Properties.Resources.resources
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.csproj.GenerateResource.cache
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.csproj.CoreCompileInputs.cache
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.csproj.CopyComplete
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.exe
+C:\Users\nanobot\Documents\PLDControl\PLDcontrol\obj\Release\PLDcontrol.pdb
