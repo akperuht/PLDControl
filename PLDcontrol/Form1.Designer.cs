@@ -858,11 +858,11 @@ namespace PLDcontrol
             // timerLabel
             // 
             this.timerLabel.AutoSize = true;
-            this.timerLabel.Font = new System.Drawing.Font("Quartz MS", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.timerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.timerLabel.ForeColor = System.Drawing.Color.White;
             this.timerLabel.Location = new System.Drawing.Point(78, 84);
             this.timerLabel.Name = "timerLabel";
-            this.timerLabel.Size = new System.Drawing.Size(201, 58);
+            this.timerLabel.Size = new System.Drawing.Size(185, 55);
             this.timerLabel.TabIndex = 52;
             this.timerLabel.Text = "0:00:00";
             this.timerLabel.Click += new System.EventHandler(this.timerLabel_Click);
@@ -987,6 +987,7 @@ namespace PLDcontrol
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PLD Control";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);

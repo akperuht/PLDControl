@@ -122,6 +122,7 @@
   <ItemGroup>
     <Content Include="laser_warning.jpg" />
     <Content Include="logo.ico" />
+    <None Include="Resources\%24this.BackgroundImage.png" />
     <Content Include="Resources\logo1.png" />
     <None Include="Resources\schem10.png" />
     <None Include="Resources\schem10_on.png" />

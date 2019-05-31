@@ -18,6 +18,14 @@ using System.Threading;
 
 namespace PLDcontrol
 {
+    /// <summary>
+    /// Main form of the PLDControl software
+    /// Communicates with laser and microcontroller via serial interface, and sends commands 
+    /// and receives data. 
+    /// 
+    /// Lately I have been using python, and therefore I am sometimes using EAFP (Easier to ask forgiveness than permission) and many try-catch clauses.
+    /// While this may not be standard way to write C#, I do not care :)
+    /// </summary>
     public partial class Form1 : Form
     {
 
@@ -28,13 +36,9 @@ namespace PLDcontrol
         private Stopwatch stopwatch = new Stopwatch();
         private System.Windows.Forms.Timer laserTimer;
 
-        private SerialPort port;
-        private String[] ports;
-        private String currentPort;
-        private const int BAUD_RATE = 9600; // Serial communication baud rate
 
         // Logfile with .aki extension, the best among all extensions
-        private string logfilename= @"\Ruhtinas Software\Data\pldcontrol_log_file.aki";
+        private readonly string LOGFILE_NAME= @"pldcontrol_log_file.aki";
         private string filename;
         // Asyncrohonous reading and writing logfile 
         public dataTransfer fileLock;
@@ -47,53 +51,75 @@ namespace PLDcontrol
         private int motorPosition = 0;
         private bool hold = false;
 
+        // Webcam attributes
         private VideoCaptureDevice videoSource;
         private FilterInfoCollection videoDevices;
         Bitmap chamberImage;
 
+        // Serial communication attributes (Arduino)
+        private SerialPort port;
+        private String[] ports;
+        private String currentPort;
+        private const int BAUD_RATE = 9600; // Serial communication baud rate
+
+        // Serial communication attributes (Laser)
         private SerialPort laserPort;
         private const int LASER_BAUD_RATE = 19200;
+        // Buffer for reading laser messages
         private string buffer;
+        // Laser status attributes
         private bool LaserOn = false;
         private const string laserPortName = "COM1";
-        private int eoDelayMa = 0;
-        private int eoDelayAd = 0;
-        private double laserTemp = 0;
-        private string laserMode = "OFF";
-        private string laserStatus = "";
+        private int eoDelayMa = 0; // Electro-optics delay in max output mode
+        private int eoDelayAd = 0; // Electro-optics delay in adjust mode
+        private double laserTemp = 0; // Cooling water temperature
+        private string laserMode = "OFF"; // Laser output mode
+        private string laserStatus = ""; // laser status
+
+        // Bool to indicate if this is initialization round
+        private bool startup = true;
 
         /// <summary>
         /// Constructor of the class
         /// </summary>
         public Form1()
         {
+            // Start timer to enable form after loading controls
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
             timer.Interval = 3000;
             timer.Start();
             timer.Tick += delegate { Opacity = 100; };
 
+            // Make logfile folder to myDocuments
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            path = Path.Combine(path,"\\Ruhtinas Software\\Data\\");
-            DirectoryInfo di = new DirectoryInfo(path);
+            path = Path.Combine(path,"\\Ruhtinas Software\\PLDControl\\Data\\");
 
+            // Check if folder exists, if not make the folder
+            DirectoryInfo di = new DirectoryInfo(path);
             if (!di.Exists)
             {
                 di.Create();
             }
-            filename = Path.Combine(path,logfilename);
+            // Create path to logfile
+            filename = Path.Combine(path, LOGFILE_NAME);
+
             InitializeComponent();
             ClearLogFile(); // Clears previous logfile
             InitializeForm();
 
+            // Create fillock object to pass filename and file lock status to ConsoleWindow
             fileLock = new dataTransfer();
             fileLock.locking = false;
             fileLock.filepath = path;
+
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+
+            // Create timer to update stopwatch label
             System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
-            updateTimer.Interval = 10;
+            updateTimer.Interval = 10; // update time every 10 milliseconds
             updateTimer.Start();
             updateTimer.Tick += delegate {
-                TimeSpan ts = stopwatch.Elapsed;
+                TimeSpan ts = stopwatch.Elapsed; // Bind label text to stopwatch value
                 string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",ts.Hours, ts.Minutes, ts.Seconds,ts.Milliseconds / 10);
                 SetTimeText(elapsedTime);
             };
@@ -107,30 +133,46 @@ namespace PLDcontrol
 
             // Initialization of laser serial messaging buffer
             buffer = "";
+
+            // uncheck offradiobutton
             offradioButton.Checked = true;
+
+            // Startup finished
+            startup = false;
         }
 
         /// <summary>
-        /// Initializes
+        /// Initializes main form
         /// </summary>
         private void InitializeForm()
         {
+            // Trackbar modifications and event handler setup
             initializeTrackBars();
             sweepButton.ForeColor = Color.Gray;
 
+            // Disabling motor sweeping by default
             rangeNumeric.Enabled = false;
             midPointNumeric.Enabled = false;
 
+            // Disabling laser timer by default
             minNumericControl.Enabled = false;
             secNumericControl.Enabled = false;
 
+            //Initialize dropDownStyle for serial port combobox
             toolStripComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+
             // Extracting port names
             ports = SerialPort.GetPortNames();
+
+            // initializing currentPort variable
+            currentPort = "NO USB DEVICES";
+
+            // If there is active serial ports detected
             if (ports.Length != 0)
             {
                 foreach (string p in ports)
                 {
+                    // Add ports to port combobox
                     toolStripComboBox1.Items.Add(p);
                 }
                 try
@@ -140,20 +182,21 @@ namespace PLDcontrol
                 }
                 catch(System.IO.IOException ex)
                 {
+                    // Catch exception, there is no device in combobox 4
                     toolStripComboBox1.SelectedIndex = 0;
                     writeLogFile("COM4 port empty");
-                    MessageBox.Show("No device in COM4 port", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No device in COM4 port: select port from menu", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
-
+                // Set currentPort variable to be one selected in port combobox
                 currentPort = (string)toolStripComboBox1.SelectedItem;
             }
-            currentPort = "NO USB DEVICES";
+            // Creating timer for laser start7stop control
             laserTimer = new System.Windows.Forms.Timer();
         }
 
         /// <summary>
-        /// Updating port list
+        /// Updating port list if menuitem is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -186,7 +229,7 @@ namespace PLDcontrol
         /// </summary>
         private void initializeTrackBars()
         {
-            /// Following is to make trackbar to send values only
+            /// Following is to make gas flow trackbars to send values only
             /// when mouse is clicked or released
             bool clicked_track1 = false;
             bool clicked_track2 = false;
@@ -232,12 +275,12 @@ namespace PLDcontrol
                 sendGasFlow(s, e);
             };
 
-            trackBar1.Maximum = 4096; //put here resolution of the gas controller
+            trackBar1.Maximum = 4096; //put here resolution of the gas controller 1
             trackBar1.Minimum = 0;
             trackBar1.TickFrequency = 4096 / 10;
 
 
-            trackBar2.Maximum = 4096; //put here resolution of the gas controller
+            trackBar2.Maximum = 4096; //put here resolution of the gas controller 2
             trackBar2.Minimum = 0;
             trackBar2.TickFrequency = 4096 / 10;
         }
@@ -255,7 +298,7 @@ namespace PLDcontrol
             }
             catch (System.IO.FileNotFoundException)
             {
-                //No file to clear
+                MessageBox.Show("Logfile not found");//No file to clear
             }
         }
 
@@ -263,11 +306,10 @@ namespace PLDcontrol
         {
             Opacity = 0;
             //this.WindowState = FormWindowState.Maximized; //Starts with maximized window
-            //this.MaximizeBox = true;
         }
 
         /// <summary>
-        /// Initializing serial ports
+        /// Initializing serial port for arduino
         /// </summary>
         private void DefineSerial()
         {
@@ -281,10 +323,10 @@ namespace PLDcontrol
                 {
                     currentPort = (string)toolStripComboBox1.SelectedItem;
                     port = new SerialPort((string)toolStripComboBox1.SelectedItem, BAUD_RATE);
-                    port.RtsEnable = false; //leonardo
-                    port.DtrEnable = true; //leonardo
+                    port.RtsEnable = false; //needed if microcontroller is arduino leonardo
+                    port.DtrEnable = true; //for leonardo
 
-
+                    // open the port
                     port.Open();
                     if (currentPort != null) currentPortLabel.Text = currentPort;
                     port.DataReceived += new SerialDataReceivedEventHandler(ArduinoCommunicationHandler);
@@ -292,6 +334,7 @@ namespace PLDcontrol
             }
             catch(Exception ex)
             {
+                // Catch general exception, not very good practice but who cares
                 writeLogFile(ex.Message);
             }
 
@@ -323,6 +366,7 @@ namespace PLDcontrol
             }
             catch (Exception ex)
             {
+                // oh no, again catching general exception
                 writeLogFile(ex.Message);
                 System.Console.WriteLine(ex.Message);
                 MessageBox.Show("Communication error with laser", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -347,6 +391,7 @@ namespace PLDcontrol
             }
             catch(Exception ex)
             {
+                // This try-catch horror continues
                 System.Console.WriteLine(ex.Message);
                 MessageBox.Show("Webcam error", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -438,36 +483,95 @@ namespace PLDcontrol
                 if (buffer.Contains("]"))
                 {
                     var laser_messages = buffer.Split('[',']');
-                    foreach( string msg in laser_messages)
+                    writeLogFile("NL->PC: " + buffer);
+                    if (buffer.Contains("ERROR"))
+                    {
+                        MessageBox.Show("Error encoutered", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    //Process each message separately
+                    foreach ( string msg in laser_messages)
                     {
                         try
                         {
+                            // Extract actual message body from incoming 
+                            // message of the form [ReceiverName:MessageBody\SenderName],
+                            // so in this case [PC:message\NL]
                             var laser_msg = msg.Split(':', '\\')[1];
-                            writeLogFile("NL->PC: " + laser_msg);
+                            //writeLogFile("NL->PC: " + laser_msg);
+
+                            // Decide what to do depending on received message
+
+                            // Selected mode information message received
                             if (laser_msg.StartsWith("E0"))
                             {
+                                // Message of the form E0/S? where ? is integer indicating current output mode
                                 Int32.TryParse(laser_msg.Split('S')[1],out int mode);
                                 if (mode == 0) { laserMode = "OFF"; }
                                 if (mode == 1) { laserMode = "ADJUST"; }
                                 if (mode == 2) { laserMode = "MAX"; }
                             }
-                            if(laser_msg.StartsWith("READY"))
+
+                            //Status message received handler
+                            if(laser_msg.StartsWith("READY")|| laser_msg.StartsWith("START"))
                             {
-                                try
+                                // check if message contains problem code
+                                if (laser_msg.ToLower().Contains('='))
                                 {
                                     Int32.TryParse(laser_msg.Split('=')[1], out int problemNumber);
+                                    // Find out what problem there is
+                                    switch (problemNumber)
+                                    {
+                                        case 1:
+                                            MessageBox.Show("Laser not ready", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            laserStatus = "Not ready";
+                                            break;
+                                        case 2:
+                                            MessageBox.Show("Laser overheated", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            laserStatus = "Overheated";
+                                            break;
+                                        case 4:
+                                            MessageBox.Show("Flash lamp error", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            laserStatus = "Flash lamp error";
+                                            break;
+                                        case 8:
+                                            MessageBox.Show("Interlock error", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            laserStatus = "Interlock error";
+                                            break;
+                                        case 16:
+                                            MessageBox.Show("Cover error", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            laserStatus = "Cover error";
+                                            break;
+
+
+                                    }
                                 }
-                                catch(Exception ex) { }
-                                laserStatus = "Ready";
+                                else
+                                {
+                                    // No problems detected
+                                    if (laser_msg.StartsWith("READY")) {laserStatus = "Ready"; }
+                                    else
+                                    {
+                                        MessageBox.Show("Laser started");
+                                        laserStatus = "Busy";
+                                    }
+
+                                }
                             }
+                            // Laser temperature message received
+                            // Message of the form U2/S? where ? is double corresponding to measured cooling water temperature
                             if (laser_msg.StartsWith("U2")) { laserTemp=Double.Parse(laser_msg.Split('S')[1], CultureInfo.InvariantCulture); }
+                            // Max output delay message received
+                            // Message of the form D0/S? where ? is integer corresponding to measured cooling water temperature
                             if (laser_msg.StartsWith("D0")) { Int32.TryParse(laser_msg.Split('S')[1], out eoDelayMa); }
+                            // Max output delay message received
+                            // Message of the form D1/S? where ? is integer corresponding to measured cooling water temperature
+                            // Last message from status query, so now messagebox with laser status values is displayed
                             if (laser_msg.StartsWith("D1"))
                             {
                                 Int32.TryParse(laser_msg.Split('S')[1], out eoDelayAd);
                                 MessageBox.Show("Laser status: " + laserStatus + Environment.NewLine +
                                     "Laser mode: " + laserMode + Environment.NewLine+
-                                    "Cooling water temperature: " + laserTemp + Environment.NewLine+
+                                    "Cooling water temperature: " + string.Format("{0}°C", laserTemp.ToString())+Environment.NewLine+
                                     "Electro-optics delay in MAX: " + eoDelayMa + Environment.NewLine+
                                     "Electro-optics delay in ADJ: " + eoDelayAd + Environment.NewLine);
                             }
@@ -488,6 +592,7 @@ namespace PLDcontrol
         /// </summary>
         private void updateDataLabels()
         {
+            // invoke every label with lambda expressions if invoke is required
             if (ArFlow_label.InvokeRequired)
             { ArFlow_label.Invoke(new Action(() => ArFlow_label.Text = ArFlow.ToString()));}
             if (N2FLow_label.InvokeRequired)
@@ -498,6 +603,7 @@ namespace PLDcontrol
             { motorPosition_label.Invoke(new Action(() => motorPosition_label.Text = motorPosition.ToString())); }
             else
             {
+                // Set label texts normally
                 ArFlow_label.Text = ArFlow.ToString();
                 N2FLow_label.Text = N2Flow.ToString();
                 Temperature_label.Text = string.Format("{0}°C", chamberTemperature.ToString());
@@ -511,6 +617,7 @@ namespace PLDcontrol
         /// <param name="message"></param>
         private void WriteToDevice(string message)
         {
+                // Check if there is device in the port
                 if (port == null)
                 {
                     MessageBox.Show("No USB-devices detected", "FastSerial 2.0", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -531,9 +638,9 @@ namespace PLDcontrol
             }
                 catch (Exception ex)
                 {
-                System.Console.WriteLine(ex);
-                writeLogFile("Message sending error:" + ex);
-                MessageBox.Show("Error", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Console.WriteLine(ex);
+                    writeLogFile("Message sending error:" + ex);
+                    MessageBox.Show("Error", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
         }
 
@@ -564,19 +671,22 @@ namespace PLDcontrol
         }
 
         /// <summary>
-        /// Writes logfile
+        /// Writes logfile with thread-safe manner
         /// </summary>
         /// <param name="message">message to write to logfile</param>
         private async void writeLogFile(string message)
         {
+            // wait until file is unlocked by filelock
             while (fileLock.locking) { await Task.Delay(ASYNC_DELAY); }
             if(!fileLock.locking){
+                //Set filelock true while writing to it
                 fileLock.locking = true;
                 String timeStamp = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); // Timestamp to logfile
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(filename, true))
                 {
                     file.WriteLine(timeStamp + " > " + message + "\n");
                 }
+                // Unlock file
                 fileLock.locking = false;
             }
 
@@ -590,6 +700,7 @@ namespace PLDcontrol
         /// <param name="e"></param>
         private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Make new consolewindow item
             ConsoleWindow consoleWindow = new ConsoleWindow(fileLock);
             consoleWindow.Text = "PLD Control";
             consoleWindow.Show();
@@ -664,6 +775,7 @@ namespace PLDcontrol
             // Control file
         }
 
+        
         /// <summary>
         /// Style-none ikkuna siirreltäväksi
         /// </summary>
@@ -678,7 +790,7 @@ namespace PLDcontrol
         private const int WM_NCHITTEST = 0x84;
         private const int HT_CLIENT = 0x1;
         private const int HT_CAPTION = 0x2;
-
+        
         /// <summary>
         /// Closes window, custom button
         /// </summary>
@@ -822,7 +934,8 @@ namespace PLDcontrol
         }
 
         /// <summary>
-        /// Sets laser power to MAX
+        /// Handler for laser max radiobutton click.
+        /// Sends message to laser that output mode should be changed to MAX
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -839,22 +952,24 @@ namespace PLDcontrol
 
         /// <summary>
         /// Handler for laser off radiobutton click
+        /// Sends message to laser that it should put electro-optics off
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void offradioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (offradioButton.Checked)
+            if (offradioButton.Checked&&!startup)
             {
                 SendMsgToLaser("[NL:E0/S0\\PC]");// Set electrooptics off
-                MessageBox.Show("Laser electrooptics switched off", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Laser electro-optics switched off", "PLDControl", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 maxButton.Checked = false;
                 adjRadioButton.Checked = false;
             }
         }
 
         /// <summary>
-        /// Handler for laser mode to adjust radiobutton click
+        /// Handler for laser off radiobutton click
+        /// Sends message to laser that output mode is adjust
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -899,23 +1014,37 @@ namespace PLDcontrol
         /// <param name="e"></param>
         private void laserStatusButton_Click(object sender, EventArgs e)
         {
+            //Send status messages to laser with different thread than UI thread
+            Thread t = new Thread(new ThreadStart(laserSendThread));
+            t.Start();
+            this.UseWaitCursor = true;
+            t.Join();
+            this.UseWaitCursor = false;
+        }
+
+        /// <summary>
+        /// Asking status information from laser.
+        /// Thread.sleep is to wait the answer before asking new question, 
+        /// this makes communication to be more reliable.
+        /// </summary>
+        private void laserSendThread(){
+
             // Ask status from laser
             SendMsgToLaser("[NL:SAY\\PC]"); // Message is [NL:SAY\PC], but backslash is special character and hence needs to be doubled
             // Ask laser mode 
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             SendMsgToLaser("[NL:E0/?\\PC]");
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             // Ask cooling water temperature from laser
             SendMsgToLaser("[NL:U2/?\\PC]");
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             // Ask electro-optics delay in max mode
             SendMsgToLaser("[NL:D0/?\\PC]");
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             // Ask electro-optics delay in adjust mode
             SendMsgToLaser("[NL:D1/?\\PC]");
-            Thread.Sleep(100);
+            Thread.Sleep(200);
         }
-
         /// <summary>
         /// Handles event when timer for laser enabled or disabled.
         /// </summary>
@@ -926,26 +1055,6 @@ namespace PLDcontrol
             // Disable or enable time controls depending timer bool value
             minNumericControl.Enabled = timerCheckBox.Checked;
             secNumericControl.Enabled = timerCheckBox.Checked;
-        }
-
-        /// <summary>
-        /// Handles event when timer minute value is changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void secNumericControl_ValueChanged(object sender, EventArgs e)
-        {
-            //TODO: implementation
-        }
-
-        /// <summary>
-        /// Hadles event when timer second value is changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void minNumericControl_ValueChanged(object sender, EventArgs e)
-        {
-            //TODO: implementation
         }
 
 
@@ -977,23 +1086,26 @@ namespace PLDcontrol
             }
         }
 
+        /*
+         * Useless event handlers
+         * waiting for better times when hey are needed
+         */
 
-        /// <summary>
-        /// Handler for goto value change, NOT IN USE
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void goToValueNumeric_ValueChanged(object sender, EventArgs e)
         {
             //
         }
 
+        private void secNumericControl_ValueChanged(object sender, EventArgs e)
+        {
+            // Nothing to do here
+        }
 
-        /// <summary>
-        /// Combobox1 event handler
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        private void minNumericControl_ValueChanged(object sender, EventArgs e)
+        {
+            // Nothing to do here
+        }
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //

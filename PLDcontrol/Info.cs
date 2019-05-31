@@ -27,7 +27,7 @@ namespace PLDcontrol
                 progressBar1.Update();
             };
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = 2000;
+            timer.Interval = 3000;
             timer.Start();
             timer.Tick += delegate { Close(); };
         }
