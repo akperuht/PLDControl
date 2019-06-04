@@ -105,6 +105,7 @@ namespace PLDcontrol
             this.laserPortLabel = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -125,6 +126,7 @@ namespace PLDcontrol
             ((System.ComponentModel.ISupportInitialize)(this.lasersignPictureBox)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -316,12 +318,12 @@ namespace PLDcontrol
             // 
             this.ArFlow_label.AutoSize = true;
             this.ArFlow_label.BackColor = System.Drawing.Color.White;
-            this.ArFlow_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ArFlow_label.Location = new System.Drawing.Point(723, 229);
+            this.ArFlow_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ArFlow_label.Location = new System.Drawing.Point(674, 211);
             this.ArFlow_label.Name = "ArFlow_label";
-            this.ArFlow_label.Size = new System.Drawing.Size(58, 29);
+            this.ArFlow_label.Size = new System.Drawing.Size(24, 25);
             this.ArFlow_label.TabIndex = 13;
-            this.ArFlow_label.Text = "0.00";
+            this.ArFlow_label.Text = "0";
             this.ArFlow_label.Click += new System.EventHandler(this.ArFlow_label_Click);
             // 
             // N2FLow_label
@@ -329,27 +331,26 @@ namespace PLDcontrol
             this.N2FLow_label.AutoSize = true;
             this.N2FLow_label.BackColor = System.Drawing.Color.White;
             this.N2FLow_label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.N2FLow_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.N2FLow_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.N2FLow_label.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.N2FLow_label.Location = new System.Drawing.Point(723, 159);
+            this.N2FLow_label.Location = new System.Drawing.Point(675, 143);
             this.N2FLow_label.Name = "N2FLow_label";
-            this.N2FLow_label.Size = new System.Drawing.Size(58, 29);
+            this.N2FLow_label.Size = new System.Drawing.Size(24, 25);
             this.N2FLow_label.TabIndex = 14;
-            this.N2FLow_label.Text = "0.00";
+            this.N2FLow_label.Text = "0";
             this.N2FLow_label.Click += new System.EventHandler(this.N2FLow_label_Click);
             // 
             // Temperature_label
             // 
             this.Temperature_label.AutoSize = true;
-            this.Temperature_label.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Temperature_label.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Temperature_label.BackColor = System.Drawing.Color.Transparent;
             this.Temperature_label.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Temperature_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Temperature_label.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Temperature_label.ForeColor = System.Drawing.SystemColors.Control;
             this.Temperature_label.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Temperature_label.Location = new System.Drawing.Point(515, 374);
+            this.Temperature_label.Location = new System.Drawing.Point(292, 18);
             this.Temperature_label.Name = "Temperature_label";
-            this.Temperature_label.Size = new System.Drawing.Size(68, 35);
+            this.Temperature_label.Size = new System.Drawing.Size(66, 33);
             this.Temperature_label.TabIndex = 15;
             this.Temperature_label.Text = "- °C";
             this.Temperature_label.Click += new System.EventHandler(this.Temperature_label_Click);
@@ -357,13 +358,13 @@ namespace PLDcontrol
             // motorPosition_label
             // 
             this.motorPosition_label.AutoSize = true;
-            this.motorPosition_label.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.motorPosition_label.BackColor = System.Drawing.Color.Transparent;
             this.motorPosition_label.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.motorPosition_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.motorPosition_label.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.motorPosition_label.Location = new System.Drawing.Point(515, 426);
+            this.motorPosition_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.motorPosition_label.ForeColor = System.Drawing.SystemColors.Control;
+            this.motorPosition_label.Location = new System.Drawing.Point(292, 85);
             this.motorPosition_label.Name = "motorPosition_label";
-            this.motorPosition_label.Size = new System.Drawing.Size(33, 35);
+            this.motorPosition_label.Size = new System.Drawing.Size(38, 41);
             this.motorPosition_label.TabIndex = 16;
             this.motorPosition_label.Text = "0";
             this.motorPosition_label.Click += new System.EventHandler(this.motorPosition_label_Click);
@@ -373,7 +374,7 @@ namespace PLDcontrol
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.ForeColor = System.Drawing.Color.Aqua;
-            this.label3.Location = new System.Drawing.Point(638, 150);
+            this.label3.Location = new System.Drawing.Point(677, 113);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(69, 13);
             this.label3.TabIndex = 17;
@@ -385,7 +386,7 @@ namespace PLDcontrol
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.ForeColor = System.Drawing.Color.Aqua;
-            this.label4.Location = new System.Drawing.Point(638, 257);
+            this.label4.Location = new System.Drawing.Point(676, 253);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(57, 13);
             this.label4.TabIndex = 18;
@@ -396,8 +397,8 @@ namespace PLDcontrol
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Chartreuse;
-            this.label5.Location = new System.Drawing.Point(268, 385);
+            this.label5.ForeColor = System.Drawing.Color.Aqua;
+            this.label5.Location = new System.Drawing.Point(41, 29);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(222, 20);
             this.label5.TabIndex = 19;
@@ -408,11 +409,12 @@ namespace PLDcontrol
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Aqua;
-            this.label6.Location = new System.Drawing.Point(381, 437);
+            this.label6.Location = new System.Drawing.Point(154, 101);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(109, 20);
             this.label6.TabIndex = 20;
             this.label6.Text = "Motor position";
+            this.label6.Click += new System.EventHandler(this.Label6_Click);
             // 
             // motorStopButton
             // 
@@ -580,9 +582,9 @@ namespace PLDcontrol
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 9);
+            this.pictureBox1.Location = new System.Drawing.Point(-42, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1075, 528);
+            this.pictureBox1.Size = new System.Drawing.Size(1076, 503);
             this.pictureBox1.TabIndex = 35;
             this.pictureBox1.TabStop = false;
             // 
@@ -850,7 +852,7 @@ namespace PLDcontrol
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox2.Location = new System.Drawing.Point(12, 537);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(620, 395);
+            this.pictureBox2.Size = new System.Drawing.Size(635, 395);
             this.pictureBox2.TabIndex = 51;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
@@ -886,7 +888,7 @@ namespace PLDcontrol
             this.panel4.Controls.Add(this.timeClearButton);
             this.panel4.Controls.Add(this.label17);
             this.panel4.Controls.Add(this.timerLabel);
-            this.panel4.Location = new System.Drawing.Point(653, 724);
+            this.panel4.Location = new System.Drawing.Point(667, 724);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(441, 208);
             this.panel4.TabIndex = 54;
@@ -905,7 +907,7 @@ namespace PLDcontrol
             // 
             this.lasersignPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lasersignPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.lasersignPictureBox.Location = new System.Drawing.Point(802, 574);
+            this.lasersignPictureBox.Location = new System.Drawing.Point(464, 368);
             this.lasersignPictureBox.Name = "lasersignPictureBox";
             this.lasersignPictureBox.Size = new System.Drawing.Size(132, 132);
             this.lasersignPictureBox.TabIndex = 55;
@@ -950,20 +952,31 @@ namespace PLDcontrol
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.label6);
-            this.panel6.Controls.Add(this.label5);
             this.panel6.Controls.Add(this.label4);
             this.panel6.Controls.Add(this.label3);
-            this.panel6.Controls.Add(this.motorPosition_label);
-            this.panel6.Controls.Add(this.Temperature_label);
             this.panel6.Controls.Add(this.N2FLow_label);
+            this.panel6.Controls.Add(this.lasersignPictureBox);
             this.panel6.Controls.Add(this.ArFlow_label);
             this.panel6.Controls.Add(this.pictureBox1);
             this.panel6.Location = new System.Drawing.Point(0, 28);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1108, 548);
+            this.panel6.Size = new System.Drawing.Size(1108, 503);
             this.panel6.TabIndex = 57;
             this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
+            // 
+            // panel7
+            // 
+            this.panel7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel7.Controls.Add(this.label6);
+            this.panel7.Controls.Add(this.label5);
+            this.panel7.Controls.Add(this.motorPosition_label);
+            this.panel7.Controls.Add(this.Temperature_label);
+            this.panel7.Location = new System.Drawing.Point(667, 537);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(441, 169);
+            this.panel7.TabIndex = 36;
             // 
             // Form1
             // 
@@ -972,11 +985,11 @@ namespace PLDcontrol
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1508, 950);
+            this.Controls.Add(this.panel7);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
-            this.Controls.Add(this.lasersignPictureBox);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -1017,6 +1030,8 @@ namespace PLDcontrol
             this.panel5.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1096,6 +1111,7 @@ namespace PLDcontrol
         private System.Windows.Forms.ToolStripMenuItem configureLaserToolStripMenuItem;
         private System.Windows.Forms.RadioButton offradioButton;
         private System.Windows.Forms.RadioButton adjRadioButton;
+        private System.Windows.Forms.Panel panel7;
     }
 }
 

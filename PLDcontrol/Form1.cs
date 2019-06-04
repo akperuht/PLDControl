@@ -594,19 +594,25 @@ namespace PLDcontrol
         {
             // invoke every label with lambda expressions if invoke is required
             if (ArFlow_label.InvokeRequired)
-            { ArFlow_label.Invoke(new Action(() => ArFlow_label.Text = ArFlow.ToString()));}
+            { ArFlow_label.Invoke(new Action(() => ArFlow_label.Text = String.Format("{0:0.00}", ArFlow))); }
             if (N2FLow_label.InvokeRequired)
-            { N2FLow_label.Invoke(new Action(() => N2FLow_label.Text = N2Flow.ToString()));}
+            { N2FLow_label.Invoke(new Action(() => N2FLow_label.Text = String.Format("{0:0.00}", N2Flow))); }
             if (Temperature_label.InvokeRequired)
-            { Temperature_label.Invoke(new Action(() => Temperature_label.Text = string.Format("{0}°C", chamberTemperature.ToString()))); }
+            {
+                Temperature_label.Invoke(new Action(() => Temperature_label.Text = String.Format("{0:0.0}°C", chamberTemperature)));
+                if (chamberTemperature < 30) { Temperature_label.ForeColor = Color.Lime; }
+                if (chamberTemperature >= 30 && chamberTemperature<50 ) { Temperature_label.ForeColor = Color.Orange; }
+                if (chamberTemperature >= 50) { Temperature_label.ForeColor = Color.Red; }
+
+            }
             if (motorPosition_label.InvokeRequired)
             { motorPosition_label.Invoke(new Action(() => motorPosition_label.Text = motorPosition.ToString())); }
             else
             {
                 // Set label texts normally
-                ArFlow_label.Text = ArFlow.ToString();
-                N2FLow_label.Text = N2Flow.ToString();
-                Temperature_label.Text = string.Format("{0}°C", chamberTemperature.ToString());
+                ArFlow_label.Text = String.Format("{0:0.00}", ArFlow);
+                N2FLow_label.Text = String.Format("{0:0.00}", ArFlow);
+                Temperature_label.Text = String.Format("{0:0.0}°C", chamberTemperature);
                 motorPosition_label.Text = motorPosition.ToString();
             }
         }
@@ -1192,6 +1198,11 @@ namespace PLDcontrol
         }
 
         private void panel6_Paint(object sender, PaintEventArgs e)
+        {
+            //
+        }
+
+        private void Label6_Click(object sender, EventArgs e)
         {
             //
         }
