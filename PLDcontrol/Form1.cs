@@ -75,6 +75,7 @@ namespace PLDcontrol
         private double laserTemp = 0; // Cooling water temperature
         private string laserMode = "OFF"; // Laser output mode
         private string laserStatus = ""; // laser status
+        private int packPulses = 0;
 
         // Bool to indicate if this is initialization round
         private bool startup = true;
@@ -563,6 +564,8 @@ namespace PLDcontrol
                             // Max output delay message received
                             // Message of the form D0/S? where ? is integer corresponding to measured cooling water temperature
                             if (laser_msg.StartsWith("D0")) { Int32.TryParse(laser_msg.Split('S')[1], out eoDelayMa); }
+
+                            if (laser_msg.StartsWith("P0")) { Int32.TryParse(laser_msg.Split('S')[1], out packPulses); }
                             // Max output delay message received
                             // Message of the form D1/S? where ? is integer corresponding to measured cooling water temperature
                             // Last message from status query, so now messagebox with laser status values is displayed
@@ -573,7 +576,8 @@ namespace PLDcontrol
                                     "Laser mode: " + laserMode + Environment.NewLine+
                                     "Cooling water temperature: " + string.Format("{0}°C", laserTemp.ToString())+Environment.NewLine+
                                     "Electro-optics delay in MAX: " + eoDelayMa + Environment.NewLine+
-                                    "Electro-optics delay in ADJ: " + eoDelayAd + Environment.NewLine);
+                                    "Electro-optics delay in ADJ: " + eoDelayAd + Environment.NewLine+
+                                    "Number of PACK pulses: " + packPulses + Environment.NewLine);
                             }
                         }
                         catch (System.IndexOutOfRangeException ex) { /*Nothing to see here*/ }
@@ -1013,6 +1017,12 @@ namespace PLDcontrol
             LaserOn = false;
         }
 
+
+        private void PackButton_Click(object sender, EventArgs e)
+        {
+            SendMsgToLaser("[NL:PACK\\PC]");
+        }
+
         /// <summary>
         /// Sends status query to laser
         /// </summary>
@@ -1044,11 +1054,15 @@ namespace PLDcontrol
             // Ask cooling water temperature from laser
             SendMsgToLaser("[NL:U2/?\\PC]");
             Thread.Sleep(200);
+            SendMsgToLaser("[NL:P0/?\\PC]");
+            Thread.Sleep(200);
             // Ask electro-optics delay in max mode
             SendMsgToLaser("[NL:D0/?\\PC]");
             Thread.Sleep(200);
             // Ask electro-optics delay in adjust mode
             SendMsgToLaser("[NL:D1/?\\PC]");
+            Thread.Sleep(200);
+            SendMsgToLaser("[NL:P0/?\\PC]");
             Thread.Sleep(200);
         }
         /// <summary>
