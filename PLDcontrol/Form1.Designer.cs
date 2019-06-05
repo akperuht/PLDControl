@@ -634,7 +634,7 @@ namespace PLDcontrol
             this.laserOnOffButton.BackColor = System.Drawing.Color.Lime;
             this.laserOnOffButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.laserOnOffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.laserOnOffButton.Location = new System.Drawing.Point(99, 27);
+            this.laserOnOffButton.Location = new System.Drawing.Point(116, 27);
             this.laserOnOffButton.Name = "laserOnOffButton";
             this.laserOnOffButton.Size = new System.Drawing.Size(128, 55);
             this.laserOnOffButton.TabIndex = 38;
@@ -821,7 +821,7 @@ namespace PLDcontrol
             this.laserStatusButton.BackColor = System.Drawing.Color.Orange;
             this.laserStatusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.laserStatusButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.laserStatusButton.Location = new System.Drawing.Point(238, 27);
+            this.laserStatusButton.Location = new System.Drawing.Point(246, 27);
             this.laserStatusButton.Name = "laserStatusButton";
             this.laserStatusButton.Size = new System.Drawing.Size(111, 55);
             this.laserStatusButton.TabIndex = 48;
@@ -982,14 +982,15 @@ namespace PLDcontrol
             // 
             // packButton
             // 
-            this.packButton.BackColor = System.Drawing.SystemColors.MenuText;
+            this.packButton.BackColor = System.Drawing.Color.DarkBlue;
+            this.packButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.packButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.packButton.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.packButton.Location = new System.Drawing.Point(3, 27);
             this.packButton.Name = "packButton";
-            this.packButton.Size = new System.Drawing.Size(90, 55);
+            this.packButton.Size = new System.Drawing.Size(110, 55);
             this.packButton.TabIndex = 53;
-            this.packButton.Text = "PACK";
+            this.packButton.Text = "Pack";
             this.packButton.UseVisualStyleBackColor = false;
             this.packButton.Click += new System.EventHandler(this.PackButton_Click);
             // 
