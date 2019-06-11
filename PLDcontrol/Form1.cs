@@ -1017,18 +1017,6 @@ namespace PLDcontrol
             LaserOn = false;
         }
 
-
-        /// <summary>
-        /// Handles Pack-button click and sends command to laser to
-        /// make optical pulses
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PackButton_Click(object sender, EventArgs e)
-        {
-            if (!offradioButton.Checked) { SendMsgToLaser("[NL:PACK\\PC]"); }
-        }
-
         /// <summary>
         /// Sends status query to laser
         /// </summary>

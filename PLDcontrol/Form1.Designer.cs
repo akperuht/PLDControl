@@ -106,7 +106,6 @@ namespace PLDcontrol
             this.label18 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.packButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -634,7 +633,7 @@ namespace PLDcontrol
             this.laserOnOffButton.BackColor = System.Drawing.Color.Lime;
             this.laserOnOffButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.laserOnOffButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.laserOnOffButton.Location = new System.Drawing.Point(116, 27);
+            this.laserOnOffButton.Location = new System.Drawing.Point(38, 27);
             this.laserOnOffButton.Name = "laserOnOffButton";
             this.laserOnOffButton.Size = new System.Drawing.Size(128, 55);
             this.laserOnOffButton.TabIndex = 38;
@@ -760,7 +759,6 @@ namespace PLDcontrol
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.packButton);
             this.panel2.Controls.Add(this.offradioButton);
             this.panel2.Controls.Add(this.adjRadioButton);
             this.panel2.Controls.Add(this.maxButton);
@@ -821,7 +819,7 @@ namespace PLDcontrol
             this.laserStatusButton.BackColor = System.Drawing.Color.Orange;
             this.laserStatusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.laserStatusButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.laserStatusButton.Location = new System.Drawing.Point(246, 27);
+            this.laserStatusButton.Location = new System.Drawing.Point(212, 27);
             this.laserStatusButton.Name = "laserStatusButton";
             this.laserStatusButton.Size = new System.Drawing.Size(111, 55);
             this.laserStatusButton.TabIndex = 48;
@@ -980,20 +978,6 @@ namespace PLDcontrol
             this.panel7.Size = new System.Drawing.Size(441, 169);
             this.panel7.TabIndex = 36;
             // 
-            // packButton
-            // 
-            this.packButton.BackColor = System.Drawing.Color.DarkBlue;
-            this.packButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.packButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.packButton.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.packButton.Location = new System.Drawing.Point(3, 27);
-            this.packButton.Name = "packButton";
-            this.packButton.Size = new System.Drawing.Size(110, 55);
-            this.packButton.TabIndex = 53;
-            this.packButton.Text = "Pack";
-            this.packButton.UseVisualStyleBackColor = false;
-            this.packButton.Click += new System.EventHandler(this.PackButton_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1128,7 +1112,6 @@ namespace PLDcontrol
         private System.Windows.Forms.RadioButton offradioButton;
         private System.Windows.Forms.RadioButton adjRadioButton;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Button packButton;
     }
 }
 
